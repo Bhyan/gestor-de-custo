@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "597338970216",
+    "firebase_url": "https://gestor-de-custo.firebaseio.com",
+    "project_id": "gestor-de-custo",
+    "storage_bucket": "gestor-de-custo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597338970216:android:a76c4b9a407015227783dd",
+        "android_client_info": {
+          "package_name": "com.example.gestordecusto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597338970216-81e04fhgssp8fp6i7aob8njp9ls8u5v0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhGc5M681p43tHU1eHJCJxF9yge8d5K6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597338970216-81e04fhgssp8fp6i7aob8njp9ls8u5v0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
