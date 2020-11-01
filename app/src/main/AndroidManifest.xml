@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GestorDeCusto">
-        <activity android:name=".Cadastro"></activity>
-        <activity android:name=".Main" />
-        <activity android:name=".Login">
+        <activity android:name=".activity.CadastroPerfil"></activity>
+        <activity android:name=".activity.Cadastro" />
+        <activity android:name=".activity.Main" />
+        <activity android:name=".activity.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
