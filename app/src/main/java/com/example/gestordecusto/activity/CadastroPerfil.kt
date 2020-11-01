@@ -57,8 +57,9 @@ class CadastroPerfil : AppCompatActivity() {
             }
         }
 
+        val pref = getSharedPreferences("informacoes", 0)
         val db = UsuarioDAO(applicationContext)
-        val usuario = db.findByEmail("bryansbritto@gmail.com") // Mudar quando tiver salvando em arquivo
+        val usuario = db.findByEmail(pref.getString("email", null).toString())
         val usuarioAtt =
             Usuario(
                 usuario.id,
@@ -75,7 +76,7 @@ class CadastroPerfil : AppCompatActivity() {
         if (db.atualizar(usuarioAtt)) {
             startActivity(Intent(this, Main::class.java))
         } else {
-            Toast.makeText(this, "Erro, verifica aí.", Toast.LENGTH_LONG)
+            Toast.makeText(this, "Erro ao adicionar os dados.", Toast.LENGTH_LONG)
                 .show()
         }
     }

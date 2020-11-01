@@ -19,6 +19,13 @@ class Login : AppCompatActivity() {
         val login = findViewById<View>(R.id.loginBtn) as Button
         val cadastro = findViewById<View>(R.id.cadastrarBtn) as Button
 
+        val email = (findViewById<View>(R.id.emailInput) as EditText)
+        val senha = (findViewById<View>(R.id.senhaInput) as EditText)
+
+        val pref = getSharedPreferences("informacoes", 0)
+        email.setText(pref.getString("email", null))
+        senha.setText(pref.getString("senha", null))
+
         login.setOnClickListener {
             login()
         }
@@ -42,7 +49,9 @@ class Login : AppCompatActivity() {
             mAuto.signInWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        startActivity(Intent(this, CadastroPerfil::class.java))
+                        startActivity(Intent(this, Main::class.java))
+
+                        salvarDadosArquivo(email, senha)
                     } else {
                         Toast.makeText(this, "E-mail ou senha incorreto.", Toast.LENGTH_LONG)
                             .show()
@@ -53,5 +62,14 @@ class Login : AppCompatActivity() {
 
     private fun cadastro() {
         startActivity(Intent(this, Cadastro::class.java))
+    }
+
+    private fun salvarDadosArquivo(email: String, senha: String){
+        val pref = getSharedPreferences("informacoes", 0)
+        val edit = pref.edit()
+
+        edit.putString("email", email)
+        edit.putString("senha", senha)
+        edit.apply()
     }
 }
