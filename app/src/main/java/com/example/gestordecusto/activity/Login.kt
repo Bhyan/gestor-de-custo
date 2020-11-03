@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.gestordecusto.MainActivity
 import com.example.gestordecusto.R
 import com.google.firebase.auth.FirebaseAuth
 
@@ -49,7 +50,7 @@ class Login : AppCompatActivity() {
             mAuto.signInWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        startActivity(Intent(this, Main::class.java))
+                        startActivity(Intent(this, MainActivity::class.java))
 
                         salvarDadosArquivo(email, senha)
                     } else {
