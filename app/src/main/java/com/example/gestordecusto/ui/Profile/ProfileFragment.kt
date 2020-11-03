@@ -1,10 +1,13 @@
-package com.example.gestordecusto.ui.home
+package com.example.gestordecusto.ui.Profile
+
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,25 +17,30 @@ import com.example.gestordecusto.activity.Main
 import com.example.gestordecusto.helper.UsuarioDAO
 import com.example.gestordecusto.model.Usuario
 
-class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+class ProfileFragment : Fragment() {
+    private lateinit var ProfileViewModel: ProfileViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
 
+        val root = inflater.inflate(R.layout.fragment_profile, container, false)
+        root.findViewById<Button>(R.id.inserirBtn).setOnClickListener{
+            finalizarCadastro()
+        }
+        root.findViewById<Button>(R.id.inserirBtn).setOnClickListener{
+
+        }
 
         return root
     }
+
     fun finalizarCadastro() {
-        homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
+        ProfileViewModel =
+                ViewModelProvider(this).get(ProfileViewModel::class.java)
         val dataNascimento = (getView()?.findViewById<View>(R.id.dataInput) as EditText).text.toString()
         val profissao = (getView()?.findViewById<View>(R.id.profissaoInput) as EditText).text.toString()
         val telefone = (getView()?.findViewById<View>(R.id.telefoneInput) as EditText).text.toString()
@@ -81,6 +89,7 @@ class HomeFragment : Fragment() {
 
         if (usuarioAtt?.let { db.atualizar(it) }!!) {
             val intent = Intent(activity, Main::class.java)
+            Toast.makeText(getActivity(),"Deu certo!",Toast.LENGTH_SHORT).show();
             startActivity(intent);
         } else {
             Toast.makeText(getActivity(),"Text!",Toast.LENGTH_SHORT).show();
