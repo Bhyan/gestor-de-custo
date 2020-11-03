@@ -5,20 +5,20 @@ import android.content.Context
 import android.database.Cursor
 import android.util.Log
 import com.example.gestordecusto.exception.EmailException
-import com.example.gestordecusto.model.Usuario
+import com.example.gestordecusto.model.UsuarioModel
 import com.example.gestordecusto.repository.UsuarioRepository
 
 class UsuarioDAO(context: Context): UsuarioRepository {
 
     private val helper: GestorCustoSqlHelper = GestorCustoSqlHelper(context)
 
-    override fun salvar(usuario: Usuario): Boolean {
+    override fun salvar(usuarioModel: UsuarioModel): Boolean {
         val db = helper.writableDatabase
         val cv = ContentValues().apply {
-            put(COLUMN_NOME_USUARIO, usuario.nome)
-            put(COLUMN_CPF_USUARIO, usuario.cpf)
-            put(COLUMN_EMAIL_USUARIO, usuario.email)
-            put(COLUMN_SENHA_USUARIO, usuario.senha)
+            put(COLUMN_NOME_USUARIO, usuarioModel.nome)
+            put(COLUMN_CPF_USUARIO, usuarioModel.cpf)
+            put(COLUMN_EMAIL_USUARIO, usuarioModel.email)
+            put(COLUMN_SENHA_USUARIO, usuarioModel.senha)
         }
 
         try{
@@ -30,21 +30,21 @@ class UsuarioDAO(context: Context): UsuarioRepository {
         }
     }
 
-    override fun atualizar(usuario: Usuario): Boolean {
+    override fun atualizar(usuarioModel: UsuarioModel): Boolean {
         val db = helper.writableDatabase
         val cv = ContentValues().apply {
-            put(COLUMN_NOME_USUARIO, usuario.nome)
-            put(COLUMN_CPF_USUARIO, usuario.cpf)
-            put(COLUMN_EMAIL_USUARIO, usuario.email)
-            put(COLUMN_SENHA_USUARIO, usuario.senha)
-            put(COLUMN_PROFISSAO_USUARIO, usuario.profissao)
-            put(COLUMN_TELEFONE_USUARIO, usuario.telefone)
-            put(COLUMN_ENDERECO_USUARIO, usuario.endereco)
-            put(COLUMN_CEP_USUARIO, usuario.cep)
+            put(COLUMN_NOME_USUARIO, usuarioModel.nome)
+            put(COLUMN_CPF_USUARIO, usuarioModel.cpf)
+            put(COLUMN_EMAIL_USUARIO, usuarioModel.email)
+            put(COLUMN_SENHA_USUARIO, usuarioModel.senha)
+            put(COLUMN_PROFISSAO_USUARIO, usuarioModel.profissao)
+            put(COLUMN_TELEFONE_USUARIO, usuarioModel.telefone)
+            put(COLUMN_ENDERECO_USUARIO, usuarioModel.endereco)
+            put(COLUMN_CEP_USUARIO, usuarioModel.cep)
         }
 
         try{
-            db.update(TABLE_USUARIO_NAME, cv, "id = " + usuario.id, null)
+            db.update(TABLE_USUARIO_NAME, cv, "id = " + usuarioModel.id, null)
             return true
         }catch (error: Exception){
             Log.i("INFO UPDATE", error.message.toString())
@@ -52,7 +52,7 @@ class UsuarioDAO(context: Context): UsuarioRepository {
         }
     }
 
-    override fun findByEmail(email: String): Usuario {
+    override fun findByEmail(email: String): UsuarioModel {
         val db = helper.readableDatabase
         val sql = "SELECT * FROM $TABLE_USUARIO_NAME WHERE $COLUMN_EMAIL_USUARIO = ?"
 
@@ -66,17 +66,17 @@ class UsuarioDAO(context: Context): UsuarioRepository {
         }
     }
 
-    private fun montarUsuario(cursor: Cursor): Usuario {
+    private fun montarUsuario(cursor: Cursor): UsuarioModel {
         val id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID))
         val nome = cursor.getString(cursor.getColumnIndex(COLUMN_NOME_USUARIO))
         val cpf = cursor.getString(cursor.getColumnIndex(COLUMN_CPF_USUARIO))
         val email = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL_USUARIO))
         val senha = cursor.getString(cursor.getColumnIndex(COLUMN_SENHA_USUARIO))
 
-        return Usuario(id, nome, cpf, email, senha)
+        return UsuarioModel(id, nome, cpf, email, senha)
     }
 
-    private fun montarUsuarioCompleto(cursor: Cursor): Usuario {
+    private fun montarUsuarioCompleto(cursor: Cursor): UsuarioModel {
         val id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID))
         val nome = cursor.getString(cursor.getColumnIndex(COLUMN_NOME_USUARIO))
         val cpf = cursor.getString(cursor.getColumnIndex(COLUMN_CPF_USUARIO))
@@ -87,6 +87,6 @@ class UsuarioDAO(context: Context): UsuarioRepository {
         val endereco = cursor.getString(cursor.getColumnIndex(COLUMN_ENDERECO_USUARIO))
         val cep = cursor.getString(cursor.getColumnIndex(COLUMN_CEP_USUARIO))
 
-        return Usuario(id, nome, cpf, email, senha, profissao, telefone, endereco, cep)
+        return UsuarioModel(id, nome, cpf, email, senha, profissao, telefone, endereco, cep)
     }
 }

@@ -8,12 +8,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gestordecusto.R
 import com.example.gestordecusto.helper.UsuarioDAO
-import com.example.gestordecusto.model.Usuario
+import com.example.gestordecusto.model.UsuarioModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 
-class Cadastro : AppCompatActivity() {
+class CadastroActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,17 +41,17 @@ class Cadastro : AppCompatActivity() {
 
         when {
             nome.isEmpty() -> {
-                Toast.makeText(this@Cadastro, "Informe o nome", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@CadastroActivity, "Informe o nome", Toast.LENGTH_LONG).show()
             }
             email.isEmpty() -> {
-                Toast.makeText(this@Cadastro, "Informe o e-mail", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@CadastroActivity, "Informe o e-mail", Toast.LENGTH_LONG).show()
             }
             senha.isEmpty() -> {
-                Toast.makeText(this@Cadastro, "Informe a senha", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@CadastroActivity, "Informe a senha", Toast.LENGTH_LONG).show()
             }
             senha != confirmarSenha -> {
                 Toast.makeText(
-                    this@Cadastro,
+                    this@CadastroActivity,
                     "A confirmação de senha deve ser igual",
                     Toast.LENGTH_LONG
                 ).show()
@@ -62,7 +62,7 @@ class Cadastro : AppCompatActivity() {
                     .addOnCompleteListener(this) { task: Task<AuthResult> ->
                         if (task.isSuccessful) {
                             Toast.makeText(
-                                this@Cadastro,
+                                this@CadastroActivity,
                                 "Cadastrado com sucesso.",
                                 Toast.LENGTH_LONG
                             )
@@ -70,18 +70,23 @@ class Cadastro : AppCompatActivity() {
 
                             val db = UsuarioDAO(applicationContext)
                             val usuario =
-                                Usuario(null, nome, cpf, email, senha, null, null, null, null)
+                                UsuarioModel(null, nome, limparString(cpf), email, senha, null, null, null, null)
 
                             db.salvar(usuario)
 
                             finish()
                         } else {
-                            Toast.makeText(this@Cadastro, "Erro ao cadastrar.", Toast.LENGTH_LONG)
+                            Toast.makeText(this@CadastroActivity, "Erro ao cadastrar.", Toast.LENGTH_LONG)
                                 .show()
 
                         }
                     }
             }
         }
+    }
+
+    private fun limparString(string: String): String {
+        return string.replace("-", "")
+            .replace(".", "")
     }
 }

@@ -1,6 +1,7 @@
 package com.example.gestordecusto.model
 
-class Simulacao(
+class SimulacaoModel(
+   var id: Long? = null,
    var nomeProduto: String,
    var custoMateria: Double,
    var custoMaoObra: Double,
@@ -8,5 +9,6 @@ class Simulacao(
    var lucro: Double,
    var tipoAtividade: TipoAtividade,
    var tipoSimulacao: TipoSimulacao,
-   var revenda: Boolean
+   var valorSujerido: Double,
+   var revenda: Boolean?
 ) {}

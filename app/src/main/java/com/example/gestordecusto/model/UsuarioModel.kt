@@ -1,6 +1,6 @@
 package com.example.gestordecusto.model
 
-data class Usuario(
+data class UsuarioModel(
     var id: Long? = null,
     var nome: String,
     var cpf: String,
@@ -9,5 +9,6 @@ data class Usuario(
     var profissao: String? = null,
     var telefone: String? = null,
     var endereco: String? = null,
-    var cep: String? = null
+    var cep: String? = null,
+    var dataNascimento: String? = null
 ) {}

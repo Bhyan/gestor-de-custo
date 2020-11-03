@@ -1,9 +1,9 @@
 package com.example.gestordecusto.repository
 
-import com.example.gestordecusto.model.Usuario
+import com.example.gestordecusto.model.UsuarioModel
 
 interface UsuarioRepository {
-    fun salvar(usuario: Usuario): Boolean
-    fun atualizar(usuario: Usuario): Boolean
-    fun findByEmail(email: String): Usuario
+    fun salvar(usuarioModel: UsuarioModel): Boolean
+    fun atualizar(usuarioModel: UsuarioModel): Boolean
+    fun findByEmail(email: String): UsuarioModel
 }

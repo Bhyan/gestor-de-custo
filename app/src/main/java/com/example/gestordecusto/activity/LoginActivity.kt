@@ -7,11 +7,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.gestordecusto.MainActivity
 import com.example.gestordecusto.R
 import com.google.firebase.auth.FirebaseAuth
 
-class Login : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +40,10 @@ class Login : AppCompatActivity() {
         val mAuto = FirebaseAuth.getInstance()
 
         if (email.isEmpty()) {
-            Toast.makeText(this@Login, "Informe o e-mail", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@LoginActivity, "Informe o e-mail", Toast.LENGTH_LONG).show()
         }
         if (senha.isEmpty()) {
-            Toast.makeText(this@Login, "Informe a senha", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@LoginActivity, "Informe a senha", Toast.LENGTH_LONG).show()
         }
         if (!email.isEmpty() && !senha.isEmpty()) {
             mAuto.signInWithEmailAndPassword(email, senha)
@@ -62,7 +61,7 @@ class Login : AppCompatActivity() {
     }
 
     private fun cadastro() {
-        startActivity(Intent(this, Cadastro::class.java))
+        startActivity(Intent(this, CadastroActivity::class.java))
     }
 
     private fun salvarDadosArquivo(email: String, senha: String){

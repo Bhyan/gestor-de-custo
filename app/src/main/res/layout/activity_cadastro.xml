@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Cadastro">
+    tools:context=".activity.CadastroActivity">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/confirmarSenhaInput"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cpfInput"
         app:layout_constraintVertical_bias="0.0" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <com.santalu.maskara.widget.MaskEditText
         android:id="@+id/cpfInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
@@ -81,7 +81,10 @@
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nomeInput"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        app:mask="___.___.___-__"
+        app:maskCharacter="_"
+        app:maskStyle="persistent" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/senhaInput"

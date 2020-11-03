@@ -26,8 +26,22 @@
     <string name="nav_header_subtitle">Gerencie seu custo aqui.</string>
     <string name="nav_header_desc">Gestor de Custo</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_home">Meu Cadastro</string>
     <string name="menu_gallery">Minhas Empresas</string>
     <string name="menu_slideshow">Minhas Atividades</string>
+    <string name="simulacao">Simulação</string>
+    <string name="tipo_de_atividade">Tipo de atividade</string>
+    <string name="produto">Produto</string>
+    <string name="servico">Serviço</string>
+    <string name="tipo_de_simulacao">Tipo de simulação</string>
+    <string name="sem_imposto">Sem impostos</string>
+    <string name="com_impostos">Com impostos</string>
+    <string name="nome_do_produto">Nome do produto</string>
+    <string name="custos_mat_ria_prima">Custos matéria prima</string>
+    <string name="custos_mao_de_obra">Custos mão de obra</string>
+    <string name="custos_diversos">Custos diversos</string>
+    <string name="lucro_almejado">Lucro almejado</string>
+    <string name="salvar">Salvar</string>
+    <string name="valor_sugerido">Valor sugerido</string>
+    <string name="revenda">Revenda</string>
 </resources>
