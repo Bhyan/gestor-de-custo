@@ -1,134 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
     tools:context=".activity.CadastroPerfilActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.CadastroPerfilActivity">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <com.santalu.maskara.widget.MaskEditText
+            android:id="@+id/dataInput"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:ems="10"
+            android:hint="@string/data_de_nascimento"
+            android:inputType="date"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:layout_constraintVertical_bias="0.153"
+            app:mask="__/__/____"
+            app:maskCharacter="_"
+            app:maskStyle="persistent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/profissaoInput"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="599dp"
+            android:hint="@string/profissao"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dataInput"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.santalu.maskara.widget.MaskEditText
+            android:id="@+id/telefoneInput"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:hint="@string/telefone"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profissaoInput"
+            app:layout_constraintVertical_bias="0.0"
+            app:mask="+55 (__) _____-____"
+            app:maskCharacter="_"
+            app:maskStyle="persistent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enderecoInput"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:hint="@string/endereco"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/telefoneInput"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.santalu.maskara.widget.MaskEditText
+            android:id="@+id/cepInput"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="26dp"
+            android:hint="@string/cep"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enderecoInput"
+            app:layout_constraintVertical_bias="0.0"
+            app:mask="__.___-___"
+            app:maskCharacter="_"
+            app:maskStyle="persistent" />
+
+        <Button
+            android:id="@+id/inserirBtn"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:text="@string/inserir"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.863"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cepInput"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/pularBtn"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:text="@string/cancelar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.119"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/cepInput"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/crie_um_perfil_completo"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.085" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        layout="@layout/content_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <com.santalu.maskara.widget.MaskEditText
-        android:id="@+id/dataInput"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
-        android:ems="10"
-        android:hint="@string/data_de_nascimento"
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.153"
-        app:mask="__/__/____"
-        app:maskCharacter="_"
-        app:maskStyle="persistent" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/profissaoInput"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
-        android:layout_marginTop="599dp"
-        android:hint="@string/profissao"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dataInput"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <com.santalu.maskara.widget.MaskEditText
-        android:id="@+id/telefoneInput"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
-        android:hint="@string/telefone"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profissaoInput"
-        app:layout_constraintVertical_bias="0.0"
-        app:mask="+55 (__) _____-____"
-        app:maskCharacter="_"
-        app:maskStyle="persistent" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/enderecoInput"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
-        android:hint="@string/endereco"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/telefoneInput"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <com.santalu.maskara.widget.MaskEditText
-        android:id="@+id/cepInput"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
-        android:layout_marginTop="26dp"
-        android:hint="@string/cep"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enderecoInput"
-        app:layout_constraintVertical_bias="0.0"
-        app:mask="__.___-___"
-        app:maskCharacter="_"
-        app:maskStyle="persistent" />
-
-    <Button
-        android:id="@+id/inserirBtn"
-        android:layout_width="130dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
-        android:text="@string/inserir"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.863"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cepInput"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/pularBtn"
-        android:layout_width="130dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
-        android:text="@string/cancelar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.119"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/cepInput"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/crie_um_perfil_completo"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.085" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu"/>
+</androidx.drawerlayout.widget.DrawerLayout>
