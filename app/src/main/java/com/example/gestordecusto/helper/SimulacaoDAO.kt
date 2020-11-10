@@ -59,12 +59,20 @@ class SimulacaoDAO(context: Context): SimulacaoRepository {
 
     }
 
-    override fun deletar(simulacao: SimulacaoModel): Boolean {
-        TODO("Not yet implemented")
+    override fun deletar(id: Long?): Boolean {
+        val db = helper.writableDatabase
+
+        try{
+            db.delete(TABLE_SIMULACAO_NAME, "id = $id", null)
+            return true
+        }catch (error: Exception){
+            Log.i("INFO UPDATE", error.message.toString())
+            return false
+        }
     }
 
     override fun listar(): ArrayList<SimulacaoModel> {
-        var simulacoes = ArrayList<SimulacaoModel>()
+        val simulacoes = ArrayList<SimulacaoModel>()
         val sql = "SELECT * FROM $TABLE_SIMULACAO_NAME"
         val db = helper.readableDatabase
         val cursor = db.rawQuery(sql, arrayOf())
@@ -88,7 +96,7 @@ class SimulacaoDAO(context: Context): SimulacaoRepository {
         val tipoSimulacao = TipoSimulacao.valueOf(cursor.getString(cursor.getColumnIndex(COLUMN_TIPO_SIMULACAO_SIMULACAO)))
         val revenda = cursor.getLong(cursor.getColumnIndex(COLUMN_REVENDA_SIMULACAO))
         val valorSujerido = cursor.getDouble(cursor.getColumnIndex(COLUMN_VALOR_SUJERIDO_SIMULACAO))
-        var revendaBoolean = revenda == 1L
+        val revendaBoolean = revenda == 1L
 
         return SimulacaoModel(id, nomeProduto, custoMaterial, custoMaoObra, custoDiversos, lucro,
             tipoAtividade, tipoSimulacao, valorSujerido, revendaBoolean)

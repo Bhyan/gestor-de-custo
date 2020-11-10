@@ -3,12 +3,12 @@ package com.example.gestordecusto.model
 enum class TipoAtividade {
     PRODUTO {
         override fun getDescricao(): String {
-            return "Produto"
+            return "PRODUTO"
         }
     },
     SERVICO {
         override fun getDescricao(): String {
-            return "Serviço"
+            return "SERVICO"
         }
     };
 

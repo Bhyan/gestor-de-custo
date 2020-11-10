@@ -41,6 +41,7 @@ class UsuarioDAO(context: Context): UsuarioRepository {
             put(COLUMN_TELEFONE_USUARIO, usuarioModel.telefone)
             put(COLUMN_ENDERECO_USUARIO, usuarioModel.endereco)
             put(COLUMN_CEP_USUARIO, usuarioModel.cep)
+            put(COLUMN_DATA_NASCIMENTO_USUARIO, usuarioModel.dataNascimento)
         }
 
         try{
@@ -59,21 +60,11 @@ class UsuarioDAO(context: Context): UsuarioRepository {
         val cursor = db.rawQuery(sql, arrayOf(email))
 
         if (cursor.moveToFirst()){
-            return montarUsuario(cursor)
+            return montarUsuarioCompleto(cursor)
         }
         else{
             throw EmailException("Email não encontrado")
         }
-    }
-
-    private fun montarUsuario(cursor: Cursor): UsuarioModel {
-        val id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID))
-        val nome = cursor.getString(cursor.getColumnIndex(COLUMN_NOME_USUARIO))
-        val cpf = cursor.getString(cursor.getColumnIndex(COLUMN_CPF_USUARIO))
-        val email = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL_USUARIO))
-        val senha = cursor.getString(cursor.getColumnIndex(COLUMN_SENHA_USUARIO))
-
-        return UsuarioModel(id, nome, cpf, email, senha)
     }
 
     private fun montarUsuarioCompleto(cursor: Cursor): UsuarioModel {
@@ -86,7 +77,8 @@ class UsuarioDAO(context: Context): UsuarioRepository {
         val telefone = cursor.getString(cursor.getColumnIndex(COLUMN_TELEFONE_USUARIO))
         val endereco = cursor.getString(cursor.getColumnIndex(COLUMN_ENDERECO_USUARIO))
         val cep = cursor.getString(cursor.getColumnIndex(COLUMN_CEP_USUARIO))
+        val dataNascimento = cursor.getString(cursor.getColumnIndex(COLUMN_DATA_NASCIMENTO_USUARIO))
 
-        return UsuarioModel(id, nome, cpf, email, senha, profissao, telefone, endereco, cep)
+        return UsuarioModel(id, nome, cpf, email, senha, profissao, telefone, endereco, cep, dataNascimento)
     }
 }

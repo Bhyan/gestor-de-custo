@@ -2,14 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_atividades"
+        android:id="@+id/nav_simulacao"
         android:icon="@drawable/ic_atividades_foreground"
-        android:title="Atividades" />
+        android:title="Simulação" />
     <item
         android:id="@+id/nav_empresas"
         android:icon="@drawable/ic_empresas_foreground"
         android:title="Empresas" />
-
     <item
         android:id="@+id/nav_informacao"
         android:icon="@drawable/ic_informacao_foreground"
@@ -22,7 +21,4 @@
         android:id="@+id/nav_sair"
         android:icon="@drawable/ic_sair_foreground"
         android:title="Sair" />
-
-
-
 </menu>

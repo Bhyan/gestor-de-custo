@@ -38,20 +38,20 @@ class InformacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_sair -> {
-                Toast.makeText(this, "Sair", Toast.LENGTH_SHORT).show()
-            }
             R.id.nav_perfil -> {
                 startActivity(Intent(this, CadastroPerfilActivity::class.java))
             }
             R.id.nav_empresas -> {
-                startActivity(Intent(this, SimulacaoActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
             }
             R.id.nav_informacao -> {
                 startActivity(Intent(this, InformacaoActivity::class.java))
             }
-            R.id.nav_atividades -> {
-                startActivity(Intent(this, MainActivity::class.java))
+            R.id.nav_simulacao -> {
+                startActivity(Intent(this, SimulacaoActivity::class.java))
+            }
+            R.id.nav_sair -> {
+                startActivity(Intent(this, LoginActivity::class.java))
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

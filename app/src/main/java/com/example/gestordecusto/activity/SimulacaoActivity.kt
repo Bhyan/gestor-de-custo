@@ -7,7 +7,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.RadioButton
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -41,14 +44,13 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
 
-
         val salvar = findViewById<View>(R.id.salvarBtn) as Button
         val cancelar = findViewById<View>(R.id.cancelarBtn) as Button
 
-        preencherValores()
+        val edicao = preencherValores()
 
         salvar.setOnClickListener {
-            if (salvarSimulação()) {
+            if (edicao) {
                 salvarSimulacao()
             } else {
                 novaSimulacao()
@@ -88,36 +90,24 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_sair -> {
-                Toast.makeText(this, "Sair", Toast.LENGTH_SHORT).show()
-            }
             R.id.nav_perfil -> {
                 startActivity(Intent(this, CadastroPerfilActivity::class.java))
             }
             R.id.nav_empresas -> {
-                startActivity(Intent(this, SimulacaoActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
             }
             R.id.nav_informacao -> {
                 startActivity(Intent(this, InformacaoActivity::class.java))
             }
-            R.id.nav_atividades -> {
-                startActivity(Intent(this, MainActivity::class.java))
+            R.id.nav_simulacao -> {
+                startActivity(Intent(this, SimulacaoActivity::class.java))
+            }
+            R.id.nav_sair -> {
+                startActivity(Intent(this, LoginActivity::class.java))
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
-    }
-
-
-    private fun salvarSimulação(): Boolean {
-        val nomeProduto = findViewById<View>(R.id.nomeProdutoInput)
-        val custoMateria = findViewById<View>(R.id.custoMateriaInput)
-        val custoMaoObra = findViewById<View>(R.id.custoMaoObraInput)
-        val custoDiverso = findViewById<View>(R.id.custoDiversoInput)
-        val lucro = findViewById<View>(R.id.lucroInput)
-
-        return (nomeProduto != null || custoMateria != null || custoMaoObra != null ||
-                custoDiverso != null || lucro != null)
     }
 
     private fun salvarSimulacao() {
@@ -164,9 +154,7 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         intent.putExtra("tipoAtividade", tipoAtividade.toString())
         intent.putExtra("tipoSimulacao", tipoSimulacao.toString())
 
-        var revendaValor = if (revenda) 1 else 0
-
-        intent.putExtra("revenda", revendaValor)
+        intent.putExtra("revenda", revenda)
 
         setResult(Activity.RESULT_OK, intent)
         finish()
@@ -204,13 +192,13 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val tipoSimulacaoSemImposto =
             (findViewById<View>(R.id.tipoSimulacaoSemImposto) as RadioButton).isChecked
         val revenda = (findViewById<View>(R.id.revenda) as CheckBox).isChecked
-        var tipoAtividade: TipoAtividade? = null
-        var tipoSimulacao: TipoSimulacao? = null
+        var tipoAtividade: String? = null
+        var tipoSimulacao: String? = null
 
         tipoAtividade =
-            if (tipoAtividadeProduto) TipoAtividade.PRODUTO else TipoAtividade.SERVICO
+            if (tipoAtividadeProduto) TipoAtividade.PRODUTO.getDescricao() else TipoAtividade.SERVICO.getDescricao()
         tipoSimulacao =
-            if (tipoSimulacaoSemImposto) TipoSimulacao.SEM_IMPOSTO else TipoSimulacao.COM_IMPOSTO
+            if (tipoSimulacaoSemImposto) TipoSimulacao.SEM_IMPOSTO.getDescricao() else TipoSimulacao.COM_IMPOSTO.getDescricao()
 
         intent.putExtra("tipoAtividade", tipoAtividade)
         intent.putExtra("tipoSimulacao", tipoSimulacao)
@@ -221,7 +209,7 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         finish()
     }
 
-    private fun preencherValores() {
+    private fun preencherValores(): Boolean {
         (findViewById<View>(R.id.nomeProdutoInput) as EditText).setText(intent.getStringExtra("nomeProduto"))
         (findViewById<View>(R.id.custoMateriaInput) as EditText).setText(intent.getStringExtra("custoMateria"))
         (findViewById<View>(R.id.custoMaoObraInput) as EditText).setText(intent.getStringExtra("custoMaoObra"))
@@ -244,5 +232,7 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
 
         (findViewById<View>(R.id.revenda) as CheckBox).isChecked = intent.getBooleanExtra("revenda", false)
+
+        return intent.getStringExtra("lucro") != null
     }
 }

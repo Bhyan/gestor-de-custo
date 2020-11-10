@@ -1,7 +1,7 @@
 package com.example.gestordecusto.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -17,7 +18,8 @@ import com.example.gestordecusto.helper.UsuarioDAO
 import com.example.gestordecusto.model.UsuarioModel
 import com.google.android.material.navigation.NavigationView
 
-class CadastroPerfilActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class CadastroPerfilActivity : AppCompatActivity(),
+    NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var toolbar: Toolbar
     lateinit var drawerLayout: DrawerLayout
@@ -32,6 +34,8 @@ class CadastroPerfilActivity : AppCompatActivity(), NavigationView.OnNavigationI
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
+
+        carregarDados()
 
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar, 0, 0
@@ -51,27 +55,30 @@ class CadastroPerfilActivity : AppCompatActivity(), NavigationView.OnNavigationI
             finish()
         }
     }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_sair -> {
-                Toast.makeText(this, "Sair", Toast.LENGTH_SHORT).show()
-            }
             R.id.nav_perfil -> {
                 startActivity(Intent(this, CadastroPerfilActivity::class.java))
             }
             R.id.nav_empresas -> {
-                startActivity(Intent(this, SimulacaoActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
             }
             R.id.nav_informacao -> {
                 startActivity(Intent(this, InformacaoActivity::class.java))
             }
-            R.id.nav_atividades -> {
-                startActivity(Intent(this, MainActivity::class.java))
+            R.id.nav_simulacao -> {
+                startActivity(Intent(this, SimulacaoActivity::class.java))
+            }
+            R.id.nav_sair -> {
+                startActivity(Intent(this, LoginActivity::class.java))
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
+    @SuppressLint("CutPasteId")
     fun finalizarCadastro() {
         val dataNascimento = (findViewById<View>(R.id.dataInput) as EditText).text.toString()
         val profissao = (findViewById<View>(R.id.profissaoInput) as EditText).text.toString()
@@ -89,16 +96,23 @@ class CadastroPerfilActivity : AppCompatActivity(), NavigationView.OnNavigationI
                 ).show()
             }
             profissao.isEmpty() -> {
-                Toast.makeText(this@CadastroPerfilActivity, "Informe a profissão", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@CadastroPerfilActivity,
+                    "Informe a profissão",
+                    Toast.LENGTH_LONG
+                ).show()
             }
             telefone.isEmpty() -> {
-                Toast.makeText(this@CadastroPerfilActivity, "Informe o telefone", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@CadastroPerfilActivity, "Informe o telefone", Toast.LENGTH_LONG)
+                    .show()
             }
             endereco.isEmpty() -> {
-                Toast.makeText(this@CadastroPerfilActivity, "Informe o endereço", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@CadastroPerfilActivity, "Informe o endereço", Toast.LENGTH_LONG)
+                    .show()
             }
             cep.isEmpty() -> {
-                Toast.makeText(this@CadastroPerfilActivity, "Informe o cep", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@CadastroPerfilActivity, "Informe o cep", Toast.LENGTH_LONG)
+                    .show()
             }
             else -> {
                 val pref = getSharedPreferences("informacoes", 0)
@@ -115,7 +129,7 @@ class CadastroPerfilActivity : AppCompatActivity(), NavigationView.OnNavigationI
                         limparString(telefone),
                         endereco,
                         limparString(cep),
-                        limparString(data)
+                        data
                     )
 
                 if (db.atualizar(usuarioAtt)) {
@@ -126,6 +140,19 @@ class CadastroPerfilActivity : AppCompatActivity(), NavigationView.OnNavigationI
                 }
             }
         }
+    }
+
+    private fun carregarDados() {
+        val pref = getSharedPreferences("informacoes", 0)
+        val db = UsuarioDAO(applicationContext)
+        val usuario = db.findByEmail(pref.getString("email", null).toString())
+
+        (findViewById<View>(R.id.dataInput) as EditText).setText(usuario.dataNascimento)
+        (findViewById<View>(R.id.profissaoInput) as EditText).setText(usuario.profissao)
+        (findViewById<View>(R.id.telefoneInput) as EditText).setText(usuario.telefone)
+        (findViewById<View>(R.id.enderecoInput) as EditText).setText(usuario.endereco)
+        (findViewById<View>(R.id.cepInput) as EditText).setText(usuario.cep)
+        (findViewById<View>(R.id.dataInput) as EditText).setText(usuario.dataNascimento)
     }
 
     private fun limparString(string: String): String {

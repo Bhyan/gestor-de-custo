@@ -3,20 +3,12 @@ package com.example.gestordecusto.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import com.google.android.material.navigation.NavigationView
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gestordecusto.R
@@ -25,6 +17,7 @@ import com.example.gestordecusto.helper.SimulacaoDAO
 import com.example.gestordecusto.model.SimulacaoModel
 import com.example.gestordecusto.model.TipoAtividade
 import com.example.gestordecusto.model.TipoSimulacao
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,7 +27,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     var listaSimulacao: ArrayList<SimulacaoModel> = ArrayList()
     lateinit var adapterSimulacao: AdapterSimulacao
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,31 +60,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_sair -> {
-                Toast.makeText(this, "Sair", Toast.LENGTH_SHORT).show()
-            }
             R.id.nav_perfil -> {
                 startActivity(Intent(this, CadastroPerfilActivity::class.java))
             }
             R.id.nav_empresas -> {
-                startActivity(Intent(this, SimulacaoActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
             }
             R.id.nav_informacao -> {
                 startActivity(Intent(this, InformacaoActivity::class.java))
             }
-            R.id.nav_atividades -> {
-                startActivity(Intent(this, MainActivity::class.java))
+            R.id.nav_simulacao -> {
+                val intent = Intent(this, SimulacaoActivity::class.java)
+                startActivityForResult(intent, 10)
+            }
+            R.id.nav_sair -> {
+                startActivity(Intent(this, LoginActivity::class.java))
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
-
     fun onSimulacaoClick(simulacao: SimulacaoModel, id: Int){
         val intent = Intent(this, SimulacaoActivity::class.java)
 
-        intent.putExtra("id", id.toString())
+        intent.putExtra("id", simulacao.id.toString())
         intent.putExtra("nomeProduto", simulacao.nomeProduto)
         intent.putExtra("custoMateria", simulacao.custoMateria.toString())
         intent.putExtra("custoMaoObra", simulacao.custoMaoObra.toString())
@@ -106,9 +98,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivityForResult(intent, 1)
     }
 
-    fun onLongClick(id: Int){
-        listaSimulacao.removeAt(id)
-        adapterSimulacao.notifyItemRemoved(id)
+    fun onLongClick(simulacao: SimulacaoModel, posicao: Int){
+        val db = SimulacaoDAO(applicationContext)
+
+        db.deletar(simulacao.id)
+
+        listaSimulacao.removeAt(posicao)
+        adapterSimulacao.notifyItemRemoved(posicao)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
