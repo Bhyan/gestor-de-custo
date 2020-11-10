@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_simulacao"
+        android:icon="@drawable/ic_atividades_foreground"
+        android:title="Simulação" />
+    <item
+        android:id="@+id/nav_empresas"
+        android:icon="@drawable/ic_empresas_foreground"
+        android:title="Empresas" />
+    <item
+        android:id="@+id/nav_informacao"
+        android:icon="@drawable/ic_informacao_foreground"
+        android:title="Informação" />
+    <item
+        android:id="@+id/nav_perfil"
+        android:icon="@drawable/ic_perfil_foreground"
+        android:title="Perfil" />
+    <item
+        android:id="@+id/nav_sair"
+        android:icon="@drawable/ic_sair_foreground"
+        android:title="Sair" />
+</menu>

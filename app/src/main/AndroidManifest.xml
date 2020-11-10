@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GestorDeCusto">
-        <activity android:name=".activity.SimulacaoActivity"></activity>
+        <activity android:name=".activity.InformacaoActivity"></activity>
+        <activity android:name=".activity.SimulacaoActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main"

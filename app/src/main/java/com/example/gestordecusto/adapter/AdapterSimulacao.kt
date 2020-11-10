@@ -10,7 +10,7 @@ import com.example.gestordecusto.model.SimulacaoModel
 
 class AdapterSimulacao(
     var listaSimulacao: ArrayList<SimulacaoModel>, val callback: (SimulacaoModel, Int) -> Unit,
-    val longClick: (Int) -> Unit
+    val longClick: (SimulacaoModel, Int) -> Unit
 ) : RecyclerView.Adapter<AdapterSimulacao.MyViewHolde>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterSimulacao.MyViewHolde {
@@ -23,8 +23,9 @@ class AdapterSimulacao(
         }
 
         vh.itemView.setOnLongClickListener{
+            val simulacao = listaSimulacao[vh.adapterPosition]
             val posicao : Int = vh.adapterPosition
-            longClick(posicao)
+            longClick(simulacao, posicao)
             true
         }
 

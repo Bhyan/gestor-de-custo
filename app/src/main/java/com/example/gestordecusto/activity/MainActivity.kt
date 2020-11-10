@@ -3,16 +3,12 @@ package com.example.gestordecusto.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import com.google.android.material.navigation.NavigationView
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gestordecusto.R
@@ -21,29 +17,33 @@ import com.example.gestordecusto.helper.SimulacaoDAO
 import com.example.gestordecusto.model.SimulacaoModel
 import com.example.gestordecusto.model.TipoAtividade
 import com.example.gestordecusto.model.TipoSimulacao
+import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    lateinit var toolbar: Toolbar
+    lateinit var drawerLayout: DrawerLayout
+    lateinit var navView: NavigationView
 
     var listaSimulacao: ArrayList<SimulacaoModel> = ArrayList()
     lateinit var adapterSimulacao: AdapterSimulacao
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
-            ), drawerLayout
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+
+        val toggle = ActionBarDrawerToggle(
+            this, drawerLayout, toolbar, 0, 0
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        navView.setNavigationItemSelectedListener(this)
 
         val db = SimulacaoDAO(applicationContext)
         listaSimulacao = db.listar()
@@ -58,20 +58,33 @@ class MainActivity : AppCompatActivity() {
         recycleView.adapter = adapterSimulacao
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_perfil -> {
+                startActivity(Intent(this, CadastroPerfilActivity::class.java))
+            }
+            R.id.nav_empresas -> {
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+            R.id.nav_informacao -> {
+                startActivity(Intent(this, InformacaoActivity::class.java))
+            }
+            R.id.nav_simulacao -> {
+                val intent = Intent(this, SimulacaoActivity::class.java)
+                startActivityForResult(intent, 10)
+            }
+            R.id.nav_sair -> {
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     fun onSimulacaoClick(simulacao: SimulacaoModel, id: Int){
         val intent = Intent(this, SimulacaoActivity::class.java)
 
-        intent.putExtra("id", id.toString())
+        intent.putExtra("id", simulacao.id.toString())
         intent.putExtra("nomeProduto", simulacao.nomeProduto)
         intent.putExtra("custoMateria", simulacao.custoMateria.toString())
         intent.putExtra("custoMaoObra", simulacao.custoMaoObra.toString())
@@ -85,9 +98,13 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, 1)
     }
 
-    fun onLongClick(id: Int){
-        listaSimulacao.removeAt(id)
-        adapterSimulacao.notifyItemRemoved(id)
+    fun onLongClick(simulacao: SimulacaoModel, posicao: Int){
+        val db = SimulacaoDAO(applicationContext)
+
+        db.deletar(simulacao.id)
+
+        listaSimulacao.removeAt(posicao)
+        adapterSimulacao.notifyItemRemoved(posicao)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

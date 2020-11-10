@@ -3,12 +3,12 @@ package com.example.gestordecusto.model
 enum class TipoSimulacao {
     SEM_IMPOSTO {
         override fun getDescricao(): String {
-            return "Sem imposto"
+            return "SEM_IMPOSTO"
         }
     },
     COM_IMPOSTO {
         override fun getDescricao(): String {
-            return "Com imposto"
+            return "COM_IMPOSTO"
         }
     };
 
