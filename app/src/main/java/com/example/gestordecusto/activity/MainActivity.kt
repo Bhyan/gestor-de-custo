@@ -136,6 +136,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             db.salvar(simulacao)
             adapterSimulacao.notifyItemInserted(db.listar().lastIndex)
+            startActivity(Intent(this, MainActivity::class.java))
         }
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             val id = data?.getStringExtra("id")
@@ -164,10 +165,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             )
 
             db.atualizar(simulacaoEdit)
-
             val simulacao = listaSimulacao.get(id!!.toInt())
             simulacao.nomeProduto = mensagem.toString()
             adapterSimulacao.notifyItemChanged(listaSimulacao.indexOf(simulacao))
+            startActivity(Intent(this, MainActivity::class.java))
+
         }
     }
 }

@@ -81,7 +81,7 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 val lucroValor = lucro.text.toString().replace("%", "").replace("_", "")
 
                 val sujerido =
-                    (custoDiverso.toDouble() + custoMateria.toDouble() + custoMaoObra.toDouble()) * (1 + lucroValor.toInt() / 100)
+                    (custoDiverso.toDouble() + custoMateria.toDouble()+ custoMaoObra.toDouble()) * (1 + lucroValor.toDouble() / 100)
 
                 valorSujerido.setText(sujerido.toString())
             }
@@ -158,6 +158,7 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         setResult(Activity.RESULT_OK, intent)
         finish()
+
     }
 
     private fun novaSimulacao() {
