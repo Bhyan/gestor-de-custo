@@ -34,7 +34,10 @@ class AdapterSimulacao(
 
     override fun onBindViewHolder(holder: AdapterSimulacao.MyViewHolde, position: Int) {
         val nome = listaSimulacao[position].nomeProduto
-        holder.nomeSimulacao.text = nome
+        val valor = listaSimulacao[position].valorSujerido
+
+        holder.nomeSimulacao.text = nome.toUpperCase()
+        holder.valorSimulacao.text = "R$ " + valor.toString()
     }
 
     override fun getItemCount(): Int {
@@ -43,5 +46,6 @@ class AdapterSimulacao(
 
     class MyViewHolde(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var nomeSimulacao = itemView.findViewById<TextView>(R.id.nomeSimulacao)
+        var valorSimulacao = itemView.findViewById<TextView>(R.id.valorSimulacao)
     }
 }

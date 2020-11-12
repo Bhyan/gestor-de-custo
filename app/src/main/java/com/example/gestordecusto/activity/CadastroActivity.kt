@@ -41,17 +41,17 @@ class CadastroActivity : AppCompatActivity() {
 
         when {
             nome.isEmpty() -> {
-                Toast.makeText(this@CadastroActivity, "Informe o nome", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Informe o nome", Toast.LENGTH_LONG).show()
             }
             email.isEmpty() -> {
-                Toast.makeText(this@CadastroActivity, "Informe o e-mail", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Informe o e-mail", Toast.LENGTH_LONG).show()
             }
             senha.isEmpty() -> {
-                Toast.makeText(this@CadastroActivity, "Informe a senha", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Informe a senha", Toast.LENGTH_LONG).show()
             }
             senha != confirmarSenha -> {
                 Toast.makeText(
-                    this@CadastroActivity,
+                    this,
                     "A confirmação de senha deve ser igual",
                     Toast.LENGTH_LONG
                 ).show()
@@ -62,7 +62,7 @@ class CadastroActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task: Task<AuthResult> ->
                         if (task.isSuccessful) {
                             Toast.makeText(
-                                this@CadastroActivity,
+                                this,
                                 "Cadastrado com sucesso.",
                                 Toast.LENGTH_LONG
                             )
@@ -76,7 +76,7 @@ class CadastroActivity : AppCompatActivity() {
 
                             finish()
                         } else {
-                            Toast.makeText(this@CadastroActivity, "Erro ao cadastrar.", Toast.LENGTH_LONG)
+                            Toast.makeText(this, "Erro ao cadastrar.", Toast.LENGTH_LONG)
                                 .show()
 
                         }

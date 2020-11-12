@@ -72,18 +72,33 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
 
             override fun afterTextChanged(s: Editable?) {
-                val custoMateria =
-                    (findViewById<View>(R.id.custoMateriaInput) as EditText).text.toString()
-                val custoMaoObra =
-                    (findViewById<View>(R.id.custoMaoObraInput) as EditText).text.toString()
-                val custoDiverso =
-                    (findViewById<View>(R.id.custoDiversoInput) as EditText).text.toString()
-                val lucroValor = lucro.text.toString().replace("%", "").replace("_", "")
+                if (validarCampos()) {
+                    val custoMateria =
+                        (findViewById<View>(R.id.custoMateriaInput) as EditText).text.toString()
+                    val custoMaoObra =
+                        (findViewById<View>(R.id.custoMaoObraInput) as EditText).text.toString()
+                    val custoDiverso =
+                        (findViewById<View>(R.id.custoDiversoInput) as EditText).text.toString()
+                    val lucroValor = lucro.text.toString().replace("%", "").replace("_", "")
+                    val semImposto =
+                        (findViewById<View>(R.id.tipoSimulacaoSemImposto) as RadioButton).isChecked
+                    val produto =
+                        (findViewById<View>(R.id.tipoAtividadeProduto) as RadioButton).isChecked
+                    var imposto = 1.0
 
-                val sujerido =
-                    (custoDiverso.toDouble() + custoMateria.toDouble()+ custoMaoObra.toDouble()) * (1 + lucroValor.toDouble() / 100)
+                    if (!semImposto) {
+                        if (produto) {
+                            imposto += 0.18
+                        } else {
+                            imposto += 0.05
+                        }
+                    }
 
-                valorSujerido.setText(sujerido.toString())
+                    val sujerido =
+                        (custoDiverso.toDouble() + custoMateria.toDouble() + custoMaoObra.toDouble()) * (1 + lucroValor.toDouble() / 100) * imposto
+
+                    valorSujerido.setText(sujerido.toString())
+                }
             }
         })
     }
@@ -111,7 +126,7 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun salvarSimulacao() {
-        if (validarCampos()){
+        if (validarCampos()) {
             intent.putExtra("id", intent.getStringExtra("id"))
             intent.putExtra("idLista", intent.getStringExtra("idLista"))
             intent.putExtra(
@@ -157,14 +172,13 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
             setResult(Activity.RESULT_OK, intent)
             finish()
-        }
-        else {
+        } else {
             Toast.makeText(this, "Informe os campos.", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun novaSimulacao() {
-        if (validarCampos()){
+        if (validarCampos()) {
             intent.putExtra(
                 "nomeProduto",
                 (findViewById<View>(R.id.nomeProdutoInput) as EditText).text.toString()
@@ -208,8 +222,7 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
             setResult(5, intent)
             finish()
-        }
-        else {
+        } else {
             Toast.makeText(this, "Informe os campos.", Toast.LENGTH_LONG).show()
         }
     }
@@ -240,10 +253,14 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun validarCampos(): Boolean {
-        val nomeProdutoInput = (findViewById<View>(R.id.nomeProdutoInput) as EditText).text.toString()
-        val custoMateriaInput = (findViewById<View>(R.id.custoMateriaInput) as EditText).text.toString()
-        val custoMaoObraInput = (findViewById<View>(R.id.custoMaoObraInput) as EditText).text.toString()
-        val custoDiversoInput = (findViewById<View>(R.id.custoDiversoInput) as EditText).text.toString()
+        val nomeProdutoInput =
+            (findViewById<View>(R.id.nomeProdutoInput) as EditText).text.toString()
+        val custoMateriaInput =
+            (findViewById<View>(R.id.custoMateriaInput) as EditText).text.toString()
+        val custoMaoObraInput =
+            (findViewById<View>(R.id.custoMaoObraInput) as EditText).text.toString()
+        val custoDiversoInput =
+            (findViewById<View>(R.id.custoDiversoInput) as EditText).text.toString()
         val lucroInput = (findViewById<View>(R.id.lucroInput) as EditText).text.toString()
 
         return nomeProdutoInput != "" && custoMateriaInput != "" && custoMaoObraInput != "" && custoDiversoInput != "" && lucroInput != ""
