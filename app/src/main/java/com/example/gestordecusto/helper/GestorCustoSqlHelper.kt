@@ -17,14 +17,16 @@ class GestorCustoSqlHelper(context: Context): SQLiteOpenHelper(context, DATABASE
             db?.execSQL("CREATE TABLE IF NOT EXISTS $TABLE_SIMULACAO_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     " $COLUMN_NOME_PRODUTO_SIMULACAO TEXT, $COLUMN_CUSTO_MATERIA_SIMULACAO REAL, $COLUMN_CUSTO_MAO_OBRA_SIMULACAO REAL, " +
                     " $COLUMN_CUSTO_DIVERSOS_SIMULACAO REAL, $COLUMN_LUCRO_SIMULACAO REAL, $COLUMN_TIPO_ATIVIDADE_SIMULACAO TEXT, " +
-                    " $COLUMN_TIPO_SIMULACAO_SIMULACAO TEXT, $COLUMN_REVENDA_SIMULACAO INTEGER, $COLUMN_VALOR_SUJERIDO_SIMULACAO REAL)")
+                    " $COLUMN_VALOR_SUJERIDO_SIMULACAO  REAL, $COLUMN_TIPO_SIMULACAO_SIMULACAO TEXT, $COLUMN_REVENDA_SIMULACAO INTEGER)")
         }catch (error: Exception){
             Log.i("INFO DB", error.message.toString())
         }
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("Not yet implemented")
+        db?.execSQL("DROP TABLE IF EXISTS  $TABLE_USUARIO_NAME");
+        db?.execSQL("DROP TABLE IF EXISTS  $TABLE_SIMULACAO_NAME");
+        onCreate(db);
     }
 
 }

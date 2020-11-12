@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun onSimulacaoClick(simulacao: SimulacaoModel, id: Int){
         val intent = Intent(this, SimulacaoActivity::class.java)
 
+        intent.putExtra("idLista", id.toString())
         intent.putExtra("id", simulacao.id.toString())
         intent.putExtra("nomeProduto", simulacao.nomeProduto)
         intent.putExtra("custoMateria", simulacao.custoMateria.toString())
@@ -136,9 +137,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             db.salvar(simulacao)
             adapterSimulacao.notifyItemInserted(db.listar().lastIndex)
+            startActivity(Intent(this, MainActivity::class.java))
         }
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             val id = data?.getStringExtra("id")
+            val idLista = data?.getStringExtra("idLista")
             val mensagem = data?.getStringExtra("nomeProduto")
 
             val nomeProduto = data?.getStringExtra("nomeProduto").toString()
@@ -164,10 +167,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             )
 
             db.atualizar(simulacaoEdit)
-
-            val simulacao = listaSimulacao.get(id!!.toInt())
+            val simulacao = listaSimulacao.get(idLista!!.toInt())
             simulacao.nomeProduto = mensagem.toString()
             adapterSimulacao.notifyItemChanged(listaSimulacao.indexOf(simulacao))
+            startActivity(Intent(this, MainActivity::class.java))
+
         }
     }
 }

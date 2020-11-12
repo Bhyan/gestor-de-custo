@@ -8,9 +8,9 @@ import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -81,7 +81,7 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 val lucroValor = lucro.text.toString().replace("%", "").replace("_", "")
 
                 val sujerido =
-                    (custoDiverso.toDouble() + custoMateria.toDouble() + custoMaoObra.toDouble()) * (1 + lucroValor.toInt() / 100)
+                    (custoDiverso.toDouble() + custoMateria.toDouble()+ custoMaoObra.toDouble()) * (1 + lucroValor.toDouble() / 100)
 
                 valorSujerido.setText(sujerido.toString())
             }
@@ -111,102 +111,107 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun salvarSimulacao() {
-        intent.putExtra("id", intent.getStringExtra("id"))
-        intent.putExtra(
-            "nomeProduto",
-            (findViewById<View>(R.id.nomeProdutoInput) as EditText).text.toString()
-        )
-        intent.putExtra(
-            "custoMateria",
-            (findViewById<View>(R.id.custoMateriaInput) as EditText).text.toString()
-        )
-        intent.putExtra(
-            "custoMaoObra",
-            (findViewById<View>(R.id.custoMaoObraInput) as EditText).text.toString()
-        )
-        intent.putExtra(
-            "custoDiverso",
-            (findViewById<View>(R.id.custoDiversoInput) as EditText).text.toString()
-        )
-        intent.putExtra(
-            "lucro", (findViewById<View>(R.id.lucroInput) as EditText).text.toString()
-                .replace("%", "")
-                .replace("_", "")
-        )
-        intent.putExtra(
-            "valorSujerido",
-            (findViewById<View>(R.id.valorSujeridoInput) as EditText).text.toString()
-        )
+        if (validarCampos()){
+            intent.putExtra("id", intent.getStringExtra("id"))
+            intent.putExtra("idLista", intent.getStringExtra("idLista"))
+            intent.putExtra(
+                "nomeProduto",
+                (findViewById<View>(R.id.nomeProdutoInput) as EditText).text.toString()
+            )
+            intent.putExtra(
+                "custoMateria",
+                (findViewById<View>(R.id.custoMateriaInput) as EditText).text.toString()
+            )
+            intent.putExtra(
+                "custoMaoObra",
+                (findViewById<View>(R.id.custoMaoObraInput) as EditText).text.toString()
+            )
+            intent.putExtra(
+                "custoDiverso",
+                (findViewById<View>(R.id.custoDiversoInput) as EditText).text.toString()
+            )
+            intent.putExtra(
+                "lucro", (findViewById<View>(R.id.lucroInput) as EditText).text.toString()
+                    .replace("%", "")
+                    .replace("_", "")
+            )
+            intent.putExtra(
+                "valorSujerido",
+                (findViewById<View>(R.id.valorSujeridoInput) as EditText).text.toString()
+            )
 
-        val tipoAtividadeProduto =
-            (findViewById<View>(R.id.tipoAtividadeProduto) as RadioButton).isChecked
-        val tipoSimulacaoSemImposto =
-            (findViewById<View>(R.id.tipoSimulacaoSemImposto) as RadioButton).isChecked
-        val revenda = (findViewById<View>(R.id.revenda) as CheckBox).isChecked
-        var tipoAtividade: TipoAtividade? = null
-        var tipoSimulacao: TipoSimulacao? = null
+            val tipoAtividadeProduto =
+                (findViewById<View>(R.id.tipoAtividadeProduto) as RadioButton).isChecked
+            val tipoSimulacaoSemImposto =
+                (findViewById<View>(R.id.tipoSimulacaoSemImposto) as RadioButton).isChecked
+            var tipoAtividade: TipoAtividade? = null
+            var tipoSimulacao: TipoSimulacao? = null
 
-        tipoAtividade =
-            if (tipoAtividadeProduto) TipoAtividade.PRODUTO else TipoAtividade.SERVICO
-        tipoSimulacao =
-            if (tipoSimulacaoSemImposto) TipoSimulacao.SEM_IMPOSTO else TipoSimulacao.COM_IMPOSTO
+            tipoAtividade =
+                if (tipoAtividadeProduto) TipoAtividade.PRODUTO else TipoAtividade.SERVICO
+            tipoSimulacao =
+                if (tipoSimulacaoSemImposto) TipoSimulacao.SEM_IMPOSTO else TipoSimulacao.COM_IMPOSTO
 
-        intent.putExtra("tipoAtividade", tipoAtividade.toString())
-        intent.putExtra("tipoSimulacao", tipoSimulacao.toString())
+            intent.putExtra("tipoAtividade", tipoAtividade.toString())
+            intent.putExtra("tipoSimulacao", tipoSimulacao.toString())
 
-        intent.putExtra("revenda", revenda)
-
-        setResult(Activity.RESULT_OK, intent)
-        finish()
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+        else {
+            Toast.makeText(this, "Informe os campos.", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun novaSimulacao() {
-        intent.putExtra(
-            "nomeProduto",
-            (findViewById<View>(R.id.nomeProdutoInput) as EditText).text.toString()
-        )
-        intent.putExtra(
-            "custoMateria",
-            (findViewById<View>(R.id.custoMateriaInput) as EditText).text.toString()
-        )
-        intent.putExtra(
-            "custoMaoObra",
-            (findViewById<View>(R.id.custoMaoObraInput) as EditText).text.toString()
-        )
-        intent.putExtra(
-            "custoDiverso",
-            (findViewById<View>(R.id.custoDiversoInput) as EditText).text.toString()
-        )
-        intent.putExtra(
-            "lucro", (findViewById<View>(R.id.lucroInput) as EditText).text.toString()
-                .replace("%", "")
-                .replace("_", "")
-        )
-        intent.putExtra(
-            "valorSujerido",
-            (findViewById<View>(R.id.valorSujeridoInput) as EditText).text.toString()
-        )
+        if (validarCampos()){
+            intent.putExtra(
+                "nomeProduto",
+                (findViewById<View>(R.id.nomeProdutoInput) as EditText).text.toString()
+            )
+            intent.putExtra(
+                "custoMateria",
+                (findViewById<View>(R.id.custoMateriaInput) as EditText).text.toString()
+            )
+            intent.putExtra(
+                "custoMaoObra",
+                (findViewById<View>(R.id.custoMaoObraInput) as EditText).text.toString()
+            )
+            intent.putExtra(
+                "custoDiverso",
+                (findViewById<View>(R.id.custoDiversoInput) as EditText).text.toString()
+            )
+            intent.putExtra(
+                "lucro", (findViewById<View>(R.id.lucroInput) as EditText).text.toString()
+                    .replace("%", "")
+                    .replace("_", "")
+            )
+            intent.putExtra(
+                "valorSujerido",
+                (findViewById<View>(R.id.valorSujeridoInput) as EditText).text.toString()
+            )
 
-        val tipoAtividadeProduto =
-            (findViewById<View>(R.id.tipoAtividadeProduto) as RadioButton).isChecked
-        val tipoSimulacaoSemImposto =
-            (findViewById<View>(R.id.tipoSimulacaoSemImposto) as RadioButton).isChecked
-        val revenda = (findViewById<View>(R.id.revenda) as CheckBox).isChecked
-        var tipoAtividade: String? = null
-        var tipoSimulacao: String? = null
+            val tipoAtividadeProduto =
+                (findViewById<View>(R.id.tipoAtividadeProduto) as RadioButton).isChecked
+            val tipoSimulacaoSemImposto =
+                (findViewById<View>(R.id.tipoSimulacaoSemImposto) as RadioButton).isChecked
+            var tipoAtividade: String? = null
+            var tipoSimulacao: String? = null
 
-        tipoAtividade =
-            if (tipoAtividadeProduto) TipoAtividade.PRODUTO.getDescricao() else TipoAtividade.SERVICO.getDescricao()
-        tipoSimulacao =
-            if (tipoSimulacaoSemImposto) TipoSimulacao.SEM_IMPOSTO.getDescricao() else TipoSimulacao.COM_IMPOSTO.getDescricao()
+            tipoAtividade =
+                if (tipoAtividadeProduto) TipoAtividade.PRODUTO.getDescricao() else TipoAtividade.SERVICO.getDescricao()
+            tipoSimulacao =
+                if (tipoSimulacaoSemImposto) TipoSimulacao.SEM_IMPOSTO.getDescricao() else TipoSimulacao.COM_IMPOSTO.getDescricao()
 
-        intent.putExtra("tipoAtividade", tipoAtividade)
-        intent.putExtra("tipoSimulacao", tipoSimulacao)
+            intent.putExtra("tipoAtividade", tipoAtividade)
+            intent.putExtra("tipoSimulacao", tipoSimulacao)
 
-        intent.putExtra("revenda", revenda)
-
-        setResult(5, intent)
-        finish()
+            setResult(5, intent)
+            finish()
+        }
+        else {
+            Toast.makeText(this, "Informe os campos.", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun preencherValores(): Boolean {
@@ -231,8 +236,16 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             (findViewById<View>(R.id.tipoSimulacaoSemImposto) as RadioButton).isChecked = true
         }
 
-        (findViewById<View>(R.id.revenda) as CheckBox).isChecked = intent.getBooleanExtra("revenda", false)
-
         return intent.getStringExtra("lucro") != null
+    }
+
+    private fun validarCampos(): Boolean {
+        val nomeProdutoInput = (findViewById<View>(R.id.nomeProdutoInput) as EditText).text.toString()
+        val custoMateriaInput = (findViewById<View>(R.id.custoMateriaInput) as EditText).text.toString()
+        val custoMaoObraInput = (findViewById<View>(R.id.custoMaoObraInput) as EditText).text.toString()
+        val custoDiversoInput = (findViewById<View>(R.id.custoDiversoInput) as EditText).text.toString()
+        val lucroInput = (findViewById<View>(R.id.lucroInput) as EditText).text.toString()
+
+        return nomeProdutoInput != "" && custoMateriaInput != "" && custoMaoObraInput != "" && custoDiversoInput != "" && lucroInput != ""
     }
 }
