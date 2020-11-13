@@ -34,7 +34,7 @@ class AdapterSimulacao(
 
     override fun onBindViewHolder(holder: AdapterSimulacao.MyViewHolde, position: Int) {
         val nome = listaSimulacao[position].nomeProduto
-        val valor = listaSimulacao[position].valorSujerido
+        val valor = Math.round(listaSimulacao[position].valorSujerido * 100.0) / 100.0
 
         holder.nomeSimulacao.text = nome.toUpperCase()
         holder.valorSimulacao.text = "R$ " + valor.toString()
