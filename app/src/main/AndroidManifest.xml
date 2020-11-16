@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GestorDeCusto">
-        <activity android:name=".activity.InformacaoActivity"></activity>
+        <activity android:name=".activity.TipoDeImpostoInformacaoActivity"></activity>
+        <activity android:name=".activity.BeneficioInformacaoActivity"></activity>
+        <activity android:name=".activity.InformacaoActivity" />
         <activity android:name=".activity.SimulacaoActivity" />
         <activity
             android:name=".activity.MainActivity"
