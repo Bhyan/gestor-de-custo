@@ -25,7 +25,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintHorizontal_bias="0.089"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.1" />
@@ -35,11 +35,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
-            android:gravity="center"
+            android:layout_marginLeft="4dp"
+            android:gravity="left"
             android:padding="5dp"
-            android:text="Ele é um tributo de competência dos município e Distrito Federal e incide sobre a prestação de serviços.\n
-O ISS é pago pelas empresas prestadoras de serviços e profissionais autônomos.\n
-Que devem pagar a contribuição anual, conforme a tabela proveniente dos serviços.\n"
+            android:text="Ele é um tributo de competência dos município e Distrito Federal e incide sobre a prestação de serviços.\nO ISS é pago pelas empresas prestadoras de serviços e profissionais autônomos.\nQue devem pagar a contribuição anual, conforme a tabela proveniente dos serviços.\n"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -58,16 +57,17 @@ Que devem pagar a contribuição anual, conforme a tabela proveniente dos servi�
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.462"
+            app:layout_constraintHorizontal_bias="0.088"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.344" />
+            app:layout_constraintVertical_bias="0.371" />
 
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_marginLeft="4dp"
+            android:gravity="left"
             android:padding="5dp"
             android:text="As pessoas jurídicas de direito privado são contribuintes e o imposto incidirá na fatura mensal da empresa,onde sua alíquota poderá entre 0,65% e 1,65%"
             android:textSize="14sp"
@@ -76,7 +76,7 @@ Que devem pagar a contribuição anual, conforme a tabela proveniente dos servi�
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.44" />
+            app:layout_constraintVertical_bias="0.434" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

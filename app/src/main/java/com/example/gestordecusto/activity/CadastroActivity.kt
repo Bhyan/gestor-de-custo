@@ -1,5 +1,6 @@
 package com.example.gestordecusto.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -73,8 +74,14 @@ class CadastroActivity : AppCompatActivity() {
                                 UsuarioModel(null, nome, limparString(cpf), email, senha, null, null, null, null)
 
                             db.salvar(usuario)
-
-                            finish()
+                            val mAuto = FirebaseAuth.getInstance()
+                            mAuto.signInWithEmailAndPassword(email, senha)
+                                    .addOnCompleteListener(this) { task ->
+                                        if (task.isSuccessful) {
+                                            startActivity(Intent(this, MainActivity::class.java))
+                                            salvarDadosArquivo(email, senha)
+                                        }
+                                    }
                         } else {
                             Toast.makeText(this, "Erro ao cadastrar.", Toast.LENGTH_LONG)
                                 .show()
@@ -83,6 +90,14 @@ class CadastroActivity : AppCompatActivity() {
                     }
             }
         }
+    }
+    private fun salvarDadosArquivo(email: String, senha: String){
+        val pref = getSharedPreferences("informacoes", 0)
+        val edit = pref.edit()
+
+        edit.putString("email", email)
+        edit.putString("senha", senha)
+        edit.apply()
     }
 
     private fun limparString(string: String): String {
