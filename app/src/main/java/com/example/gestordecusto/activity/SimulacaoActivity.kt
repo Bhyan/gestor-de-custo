@@ -93,6 +93,10 @@ class SimulacaoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                             imposto += 0.05
                         }
                     }
+                    
+                    if (lucroValor == ""){
+                        lucroValor = "0"
+                    }
 
                     val sujerido =
                         (custoDiverso.toDouble() + custoMateria.toDouble() + custoMaoObra.toDouble()) * (1 + lucroValor.toDouble() / 100) * imposto
